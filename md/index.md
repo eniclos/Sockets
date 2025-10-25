@@ -15,6 +15,6 @@ Material creat per:
 **Índex**
 
 [**3.1.  INTRODUCCIÓ**](teoria/Introduccio.md)  
-[**3.3.3.2  Multicast UDP (User Datagram Protocol)**] (teoria/MulticastUDP.md)  
+[**3.3.3.2  Multicast UDP (User Datagram Protocol)**](teoria/MulticastUDP.md)  
 [**3.3.3.3  Resolució de noms DNS**](teoria/ResolucioDNS.md)  
-[**3.3.3.4 TCP (Transmission Control Protocol**)](teoria/SocketsTCP.md)
+[**3.3.3.4 TCP (Transmission Control Protocol)**](teoria/SocketsTCP.md)

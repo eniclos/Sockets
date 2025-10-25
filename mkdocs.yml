@@ -27,9 +27,7 @@ theme:
       primary: indigo
       accent: indigo
 
-plugins:
-  - search
-  - tags
+
 
 markdown_extensions:
   - admonition
