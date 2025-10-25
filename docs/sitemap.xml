@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://eniclos.com/</loc>
+         <loc>https://eniclos.github.io/Sockets/</loc>
          <lastmod>2025-10-25</lastmod>
     </url>
     <url>
-         <loc>https://eniclos.com/practiques/tasques/</loc>
+         <loc>https://eniclos.github.io/Sockets/practiques/tasques/</loc>
          <lastmod>2025-10-25</lastmod>
     </url>
     <url>
-         <loc>https://eniclos.com/teoria/Introduccio/</loc>
+         <loc>https://eniclos.github.io/Sockets/teoria/Introduccio/</loc>
          <lastmod>2025-10-25</lastmod>
     </url>
     <url>
-         <loc>https://eniclos.com/teoria/MulticastUDP/</loc>
+         <loc>https://eniclos.github.io/Sockets/teoria/MulticastUDP/</loc>
          <lastmod>2025-10-25</lastmod>
     </url>
     <url>
-         <loc>https://eniclos.com/teoria/ResolucioDNS/</loc>
+         <loc>https://eniclos.github.io/Sockets/teoria/ResolucioDNS/</loc>
          <lastmod>2025-10-25</lastmod>
     </url>
     <url>
-         <loc>https://eniclos.com/teoria/SocketsTCP/</loc>
+         <loc>https://eniclos.github.io/Sockets/teoria/SocketsTCP/</loc>
          <lastmod>2025-10-25</lastmod>
     </url>
 </urlset>
