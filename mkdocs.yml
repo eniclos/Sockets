@@ -1,0 +1,62 @@
+site_name: 2n DAM Semipresencial - Programació de Serveis i Processos 
+docs_dir: "md"
+site_dir: "docs"
+site_description: "2n DAM Semipresencial - Programació de Serveis i Processos > Sockets"
+site_url: https://eniclos.com
+repo_url: https://github.com/eniclos/Sockets
+repo_name: eniclos/Sockets
+copyright: "© 2025 Enrique Niclós Camarasa"
+
+theme:
+  name: material
+  language: es
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.sections
+    - navigation.footer
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+
+plugins:
+  - search
+  - tags
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.tasklist
+  - pymdownx.emoji
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+
+nav:
+  - index.md
+  - Teoria: 
+    - Introducció: teoria/Introduccio.md
+    - Multicast TCP: teoria/MulticastUDP.md
+    - Resolució DNS: teoria/ResolucioDNS.md
+    - Sockets TCP: teoria/SocketsTCP.md
+  - Practiques:
+    - Tasques: practiques/tasques.md
+    

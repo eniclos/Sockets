@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://tu-dominio-ejemplo.com/</loc>
+         <lastmod>2025-10-25</lastmod>
+    </url>
+    <url>
+         <loc>https://tu-dominio-ejemplo.com/practiques/tasques/</loc>
+         <lastmod>2025-10-25</lastmod>
+    </url>
+    <url>
+         <loc>https://tu-dominio-ejemplo.com/teoria/Introduccio/</loc>
+         <lastmod>2025-10-25</lastmod>
+    </url>
+    <url>
+         <loc>https://tu-dominio-ejemplo.com/teoria/MulticastUDP/</loc>
+         <lastmod>2025-10-25</lastmod>
+    </url>
+    <url>
+         <loc>https://tu-dominio-ejemplo.com/teoria/ResolucioDNS/</loc>
+         <lastmod>2025-10-25</lastmod>
+    </url>
+    <url>
+         <loc>https://tu-dominio-ejemplo.com/teoria/SocketsTCP/</loc>
+         <lastmod>2025-10-25</lastmod>
+    </url>
+</urlset>
