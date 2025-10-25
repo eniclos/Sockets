@@ -2,8 +2,7 @@ site_name: 2n DAM Semipresencial - Programació de Serveis i Processos
 docs_dir: "md"
 site_dir: "docs"
 site_description: "2n DAM Semipresencial - Programació de Serveis i Processos > Sockets"
-site_url: https://eniclos.com
-repo_url: https://github.com/eniclos/Sockets
+site_url: https://eniclos.github.io/Sockets/
 repo_name: eniclos/Sockets
 copyright: "© 2025 Enrique Niclós Camarasa"
 
