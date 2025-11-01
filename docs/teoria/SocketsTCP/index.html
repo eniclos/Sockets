@@ -123,13 +123,21 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Canvia a mode oscur"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Canvia a mode oscur" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
     
   
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Canvia a mode clar"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Canvia a mode clar" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
     
   
 </form>
@@ -737,7 +745,7 @@
           
           
             <div class="md-content" data-md-component="content">
-              <article class="md-content__inner md-typeset">
+              <article class="md-content__inner md-typeset"><a class="md-content__button md-icon" download href="SocketsTCP.pdf" title="PDF"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10.5h1v3h-1v-3m-5 1h1v-1H7v1M20 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2M9.5 10.5A1.5 1.5 0 0 0 8 9H5.5v6H7v-2h1a1.5 1.5 0 0 0 1.5-1.5v-1m5 0A1.5 1.5 0 0 0 13 9h-2.5v6H13a1.5 1.5 0 0 0 1.5-1.5v-3m4-1.5h-3v6H17v-2h1.5v-1.5H17v-1h1.5V9z"></path></svg></a>
                 
                   
 
@@ -939,28 +947,53 @@
 </ol>
 <p>De forma més global, qualsevol aplicació TCP, inclou part servidora i part client,  seguirà el següent cicle de vida:</p>
 <p>A continuació es planteja un exemple que il·lustra una comunicació TCP.</p>
-<div class="admonition tip">
-<p class="admonition-title"><strong>Exemple 3.5</strong>:</p>
-<p><strong>Implementa un programa al paquet Exemple3_05_HolaAdeuTCP que implemente una breu comunicació entre un client TCP (Hola.java)  i un servidor TCP (Adeu.java) que aten peticions al  port 15000. El client envia el text “Hola” i el servidor li contesta amb el text “Adeu”.</strong></p>
-</div>
+<details class="tip">
+<summary><strong>Exemple 3.5</strong>:</summary>
+<p><strong>Implementa un programa al paquet Exemple3_05_HolaAdeuTCP que implemente una breu comunicació entre un client TCP (<em>Hola.java</em>)  i un servidor TCP (<em>Adeu.java</em>) que aten peticions al  port 15000. El client envia el text “Hola” i el servidor li contesta amb el text “<em>Adeu</em>”.</strong></p>
 <p>Al codi s’observa que s’han emprat fils per implementar la lògica del client i servidor TCP</p>
-<p><strong><em>Main.java</em></strong>
-<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">Exemple3_05_HolaAdeuTCPu</span><span class="p">;</span>
-
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Main.java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">Exemple3_05_HolaAdeuTCPu</span><span class="p">;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.io.IOException</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.net.InetAddress</span><span class="p">;</span>
 
-
 <span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Main</span><span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">serverPort</span><span class="o">=</span><span class="mi">15000</span><span class="p">;</span>
-<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-
+<span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">serverPort</span><span class="o">=</span><span class="mi">15000</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 
 <span class="w">       </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
 <span class="w">           </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Programa que un client TCP envia la paraula &#39;Hola&#39; al Servidor&quot;</span>
-<span class="w">                   </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;\n i el Servidor visualitza el text a més de respondre al Client amb &#39;Adeu&#39;&quot;</span>
-<span class="w">                   </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;\n visualitzant-ho tot per pantalla&quot;</span><span class="p">);</span>
+<span class="w">               </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;\n i el Servidor visualitza el text a més de respondre al Client amb &#39;Adeu&#39;&quot;</span>
+<span class="w">               </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;\n visualitzant-ho tot per pantalla&quot;</span><span class="p">);</span>
 <span class="w">           </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;========================================================================&quot;</span><span class="p">);</span>
 
 
@@ -968,10 +1001,8 @@
 <span class="w">           </span><span class="n">server</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
 <span class="w">           </span><span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
 
-
 <span class="w">       </span><span class="n">Thread</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Hola</span><span class="p">(</span><span class="n">InetAddress</span><span class="p">.</span><span class="na">getByName</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">serverPort</span><span class="p">),</span><span class="s">&quot;clientHOLA&quot;</span><span class="p">);</span>
 <span class="w">           </span><span class="n">client</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
-
 
 <span class="w">           </span><span class="n">server</span><span class="p">.</span><span class="na">join</span><span class="p">();</span>
 <span class="w">           </span><span class="n">client</span><span class="p">.</span><span class="na">join</span><span class="p">();</span>
@@ -981,11 +1012,87 @@
 <span class="w">       </span><span class="p">}</span>
 <span class="w">   </span><span class="p">}</span><span class="c1">//main</span>
 <span class="p">}</span><span class="c1">//class</span>
-</code></pre></div></p>
-<p>A la classe <em>Main</em>, es creen els dos fils passant-los com a arguments o bé el port on escoltar peticions en el cas del servidor o bé el port més la IP del servidor en el cas del Client</p>
-<p><strong><em>Adeu.java</em></strong> <em>(Servidor TCP)</em><br />
-<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">Exemple3_05_HolaAdeuTCP</span><span class="p">;</span>
-
+</code></pre></div></td></tr></table></div>
+<p>A la classe <em>Main</em>, es creen els dos fils passant-los com a arguments o bé el port on escoltar peticions en el cas del servidor o bé el port més la IP del servidor en el cas del Client<br />
+<strong><em>(Servidor TCP)</em></strong>  </p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Adeu.java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">Exemple3_05_HolaAdeuTCP</span><span class="p">;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.io.DataInputStream</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.io.DataOutputStream</span><span class="p">;</span>
@@ -995,7 +1102,6 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.net.ServerSocket</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.net.Socket</span><span class="p">;</span>
 
-
 <span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Adeu</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Runnable</span><span class="p">{</span>
 <span class="w">   </span><span class="c1">//Atributes</span>
 <span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">ServerSocket</span><span class="w"> </span><span class="n">serverSocket</span><span class="p">;</span>
@@ -1003,7 +1109,6 @@
 <span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">serverPort</span><span class="p">;</span>
 <span class="w">   </span><span class="n">DataInputStream</span><span class="w"> </span><span class="n">fluxIn</span><span class="p">;</span>
 <span class="w">   </span><span class="n">DataOutputStream</span><span class="w"> </span><span class="n">fluxOut</span><span class="p">;</span>
-
 
 <span class="w">   </span><span class="c1">//Constructor</span>
 <span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="nf">Adeu</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">portToListen</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
@@ -1015,35 +1120,28 @@
 <span class="w">       </span><span class="n">fluxOut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
 <span class="w">   </span><span class="p">}</span>
 
-
 <span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">       </span><span class="n">String</span><span class="w"> </span><span class="n">cadenaEnviar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Adeu&quot;</span><span class="p">;</span>
 <span class="w">       </span><span class="n">String</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
 <span class="w">       </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
 
-
 <span class="w">           </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;]  Esperant peticions al port &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">serverPort</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;...&quot;</span><span class="p">);</span>
-
 
 <span class="w">           </span><span class="c1">// Socket esperant peticio</span>
 <span class="w">           </span><span class="n">socketToClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">serverSocket</span><span class="p">.</span><span class="na">accept</span><span class="p">();</span>
 <span class="w">           </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;]  Atenent al Client al port &quot;</span><span class="o">+</span><span class="n">socketToClient</span><span class="p">.</span><span class="na">getPort</span><span class="p">());</span>
 
-
 <span class="w">           </span><span class="n">InputStream</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">socketToClient</span><span class="p">.</span><span class="na">getInputStream</span><span class="p">();</span><span class="c1">// Obtenció del flux de LECTURA</span>
 <span class="w">           </span><span class="n">fluxIn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DataInputStream</span><span class="p">(</span><span class="n">in</span><span class="p">);</span><span class="w">                </span><span class="c1">// Conversio a DataInputStream</span>
 <span class="w">           </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fluxIn</span><span class="p">.</span><span class="na">readUTF</span><span class="p">();</span><span class="w">                        </span><span class="c1">//  lectura del socol Client</span>
 
-
 <span class="w">           </span><span class="c1">// Mostrant dades rebudes</span>
 <span class="w">           </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;] Dades rebudes al Servidor: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">data</span><span class="p">);</span>
-
 
 <span class="w">           </span><span class="n">OutputStream</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">socketToClient</span><span class="p">.</span><span class="na">getOutputStream</span><span class="p">();</span><span class="c1">// Obtenció del flux d&#39;ESCRIPTURA</span>
 <span class="w">           </span><span class="n">fluxOut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DataOutputStream</span><span class="p">(</span><span class="n">out</span><span class="p">);</span><span class="w">                </span><span class="c1">// Conversio a DataOutputStream</span>
 <span class="w">           </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;] Dades enviades al Client: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cadenaEnviar</span><span class="p">);</span>
 <span class="w">           </span><span class="n">fluxOut</span><span class="p">.</span><span class="na">writeUTF</span><span class="p">(</span><span class="n">cadenaEnviar</span><span class="p">);</span><span class="w">                         </span><span class="c1">// escriptura al socol Client</span>
-
 
 <span class="w">           </span><span class="c1">// Tancament del socol amb el Client</span>
 <span class="w">           </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">socketToClient</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">socketToClient</span><span class="p">.</span><span class="na">isClosed</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
@@ -1060,12 +1158,10 @@
 <span class="w">               </span><span class="n">socketToClient</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
 <span class="w">           </span><span class="p">}</span>
 
-
 <span class="w">           </span><span class="c1">// Tancament del socol Servidor</span>
 <span class="w">           </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">serverSocket</span><span class="p">.</span><span class="na">isClosed</span><span class="p">())</span>
 <span class="w">               </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;] Tancant socol al port &quot;</span><span class="o">+</span><span class="w"> </span><span class="n">serverPort</span><span class="p">);</span>
 <span class="w">               </span><span class="n">serverSocket</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
-
 
 <span class="w">           </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;]  Finalitzat&quot;</span><span class="p">);</span>
 <span class="w">       </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -1074,11 +1170,73 @@
 <span class="w">       </span><span class="p">}</span>
 <span class="w">   </span><span class="p">}</span><span class="c1">//run</span>
 <span class="p">}</span><span class="c1">//class</span>
-</code></pre></div></p>
+</code></pre></div></td></tr></table></div>
 <p>Destacar que en finalitzar la comunicació, a més de tancar el sòcol específic per a la conversa amb el client, caldrà també tancar el sòcol on el servidor escolta peticions abans finalitzar exemple.</p>
-<p><strong><em>Hola.java</em></strong> <em>(Client TCP)</em><br />
-<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">Exemple3_05_HolaAdeuTCP</span><span class="p">;</span>
-
+<p><strong><em>(Client TCP)</em></strong>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Hola.java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">Exemple3_05_HolaAdeuTCP</span><span class="p">;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.io.DataInputStream</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.io.DataOutputStream</span><span class="p">;</span>
@@ -1088,72 +1246,74 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.net.InetAddress</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.net.Socket</span><span class="p">;</span>
 
-
 <span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Hola</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Runnable</span><span class="p">{</span>
-<span class="w">   </span><span class="c1">//Atributes</span>
-<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">InetAddress</span><span class="w"> </span><span class="n">IPServer</span><span class="p">;</span>
-<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">Socket</span><span class="w"> </span><span class="n">socketToServer</span><span class="p">;</span>
-<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">portToServer</span><span class="p">;</span>
-<span class="w">   </span><span class="n">DataInputStream</span><span class="w"> </span><span class="n">fluxIn</span><span class="p">;</span>
-<span class="w">   </span><span class="n">DataOutputStream</span><span class="w"> </span><span class="n">fluxOut</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">//Atributes</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">InetAddress</span><span class="w"> </span><span class="n">IPServer</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Socket</span><span class="w"> </span><span class="n">socketToServer</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">portToServer</span><span class="p">;</span>
+<span class="w">    </span><span class="n">DataInputStream</span><span class="w"> </span><span class="n">fluxIn</span><span class="p">;</span>
+<span class="w">    </span><span class="n">DataOutputStream</span><span class="w"> </span><span class="n">fluxOut</span><span class="p">;</span>
 
 
-<span class="w">   </span><span class="c1">//Constructor</span>
-<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="nf">Hola</span><span class="p">(</span><span class="n">InetAddress</span><span class="w"> </span><span class="n">IPServer</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">portToWrite</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
-<span class="w">       </span><span class="k">this</span><span class="p">.</span><span class="na">IPServer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IPServer</span><span class="p">;</span>
-<span class="w">       </span><span class="k">this</span><span class="p">.</span><span class="na">portToServer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">portToWrite</span><span class="p">;</span>
-<span class="w">       </span><span class="k">this</span><span class="p">.</span><span class="na">socketToServer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Socket</span><span class="p">(</span><span class="n">IPServer</span><span class="p">,</span><span class="w"> </span><span class="n">portToServer</span><span class="p">);</span>
-<span class="w">       </span><span class="n">fluxIn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="w">       </span><span class="n">fluxOut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="w">   </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">//Constructor</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Hola</span><span class="p">(</span><span class="n">InetAddress</span><span class="w"> </span><span class="n">IPServer</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">portToWrite</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">IPServer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IPServer</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">portToServer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">portToWrite</span><span class="p">;</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">socketToServer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Socket</span><span class="p">(</span><span class="n">IPServer</span><span class="p">,</span><span class="w"> </span><span class="n">portToServer</span><span class="p">);</span>
+<span class="w">        </span><span class="n">fluxIn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">        </span><span class="n">fluxOut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-
-<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">       </span><span class="n">String</span><span class="w"> </span><span class="n">cadenaEnviar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hola&quot;</span><span class="p">;</span>
 
-
-<span class="w">       </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
 <span class="w">           </span><span class="c1">// Obtenció del flux d&#39;ESCRIPTURA</span>
-<span class="w">           </span><span class="n">OutputStream</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">socketToServer</span><span class="p">.</span><span class="na">getOutputStream</span><span class="p">();</span>
-<span class="w">           </span><span class="n">fluxOut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DataOutputStream</span><span class="p">(</span><span class="n">out</span><span class="p">);</span><span class="w">    </span><span class="c1">// Conversio a DataOutputStream</span>
-<span class="w">           </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;] Dades enviades al Servidor: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cadenaEnviar</span><span class="p">);</span>
-<span class="w">           </span><span class="n">fluxOut</span><span class="p">.</span><span class="na">writeUTF</span><span class="p">(</span><span class="n">cadenaEnviar</span><span class="p">);</span><span class="w">             </span><span class="c1">// escriptura al socol del Servidor</span>
-
-
-
+<span class="w">            </span><span class="n">OutputStream</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">socketToServer</span><span class="p">.</span><span class="na">getOutputStream</span><span class="p">();</span>
+<span class="w">            </span><span class="n">fluxOut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DataOutputStream</span><span class="p">(</span><span class="n">out</span><span class="p">);</span><span class="w">    </span><span class="c1">// Conversio a DataOutputStream</span>
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;] Dades enviades al Servidor: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cadenaEnviar</span><span class="p">);</span>
+<span class="w">            </span><span class="n">fluxOut</span><span class="p">.</span><span class="na">writeUTF</span><span class="p">(</span><span class="n">cadenaEnviar</span><span class="p">);</span><span class="w">             </span><span class="c1">// escriptura al socol del Servidor</span>
 
 <span class="w">           </span><span class="c1">// Obtenció del flux de LECTURA</span>
 <span class="w">           </span><span class="n">InputStream</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">socketToServer</span><span class="p">.</span><span class="na">getInputStream</span><span class="p">();</span>
 <span class="w">           </span><span class="n">fluxIn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DataInputStream</span><span class="p">(</span><span class="n">in</span><span class="p">);</span><span class="w">       </span><span class="c1">// Conversio a DataInputStream</span>
-<span class="w">           </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;] Dades rebudes al Client: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fluxIn</span><span class="p">.</span><span class="na">readUTF</span><span class="p">());</span>
-
+<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;] Dades rebudes al Client: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fluxIn</span><span class="p">.</span><span class="na">readUTF</span><span class="p">());</span>
 
 <span class="w">           </span><span class="c1">// Tancament del socol amb el Servidor</span>
 <span class="w">           </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">socketToServer</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">socketToServer</span><span class="p">.</span><span class="na">isClosed</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
 <span class="w">               </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">socketToServer</span><span class="p">.</span><span class="na">isInputShutdown</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                   </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;] Tancant flux lectura...&quot;</span><span class="p">);</span>
 <span class="w">                   </span><span class="n">socketToServer</span><span class="p">.</span><span class="na">shutdownInput</span><span class="p">();</span>
-<span class="w">               </span><span class="p">}</span>
-<span class="w">               </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">socketToServer</span><span class="p">.</span><span class="na">isOutputShutdown</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                   </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;] Tancant flux escriptura...&quot;</span><span class="p">);</span>
-<span class="w">                   </span><span class="n">socketToServer</span><span class="p">.</span><span class="na">shutdownOutput</span><span class="p">();</span>
-<span class="w">               </span><span class="p">}</span>
-<span class="w">               </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;] Tancant socol&quot;</span><span class="p">);</span>
-<span class="w">               </span><span class="n">socketToServer</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">socketToServer</span><span class="p">.</span><span class="na">isOutputShutdown</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;] Tancant flux escriptura...&quot;</span><span class="p">);</span>
+<span class="w">                    </span><span class="n">socketToServer</span><span class="p">.</span><span class="na">shutdownOutput</span><span class="p">();</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;] Tancant socol&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="n">socketToServer</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
 
-
-<span class="w">               </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;]  Finalitzat&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="o">+</span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;]  Finalitzat&quot;</span><span class="p">);</span>
 <span class="w">           </span><span class="p">}</span>
-<span class="w">       </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">           </span><span class="c1">// TODO Auto-generated catch block</span>
-<span class="w">           </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
-<span class="w">       </span><span class="p">}</span>
-<span class="w">   </span><span class="p">}</span><span class="c1">//run </span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// TODO Auto-generated catch block</span>
+<span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span><span class="c1">//run </span>
 <span class="p">}</span><span class="c1">//class </span>
-</code></pre></div></p>
-<div class="admonition note">
-<p class="admonition-title"><strong>Activitat Proposada 3.6</strong></p>
+</code></pre></div></td></tr></table></div></p>
+</details>
+<details class="note">
+<summary><strong>Activitat Proposada 3.6</strong></summary>
 <p><strong>Realitza un programa al paquet Act3_06_Servidor3Clients que realitze un breu diàleg orientat a connexió entre un programa servidor i tres clients que intercanvien cadenes d'informació. Cada vegada que es presenta un client, el servidor el saludarà enviant-li la frase "Hola client N" (on N és el número de client) a mostrar per pantalla el client. Este servidor sols atendrà fins a tres client finalizant la seua execució després i mostrant a cada petició el text "Atenent al client N".</strong></p>
+<pre class="mermaid"><code>sequenceDiagram
+autonumber
+Note right of Servidor: Esperant connexions al port 11000
+Client1-&gt;&gt; Servidor:  Iniciant comunicació amb el servidor al port 11000...
+    Servidor --&gt; Client1: Hola Client1
+Client2-&gt;&gt; Servidor:  Iniciant comunicació amb el servidor al port 11000...
+Servidor --&gt; Client2: Hola Client2
+Client3-&gt;&gt; Servidor:  Iniciant comunicació amb el servidor al port 11000...
+Servidor --&gt; Client2: Hola Client3</code></pre>
 <p>Exemple: </p>
 <table>
 <thead>
@@ -1203,7 +1363,7 @@
 </tr>
 </tbody>
 </table>
-</div>
+</details>
 
 
 
@@ -1223,6 +1383,12 @@
           
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
         
       </main>
       
@@ -1296,7 +1462,7 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.sections", "navigation.footer", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>

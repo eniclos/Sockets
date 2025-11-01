@@ -155,230 +155,213 @@ De forma més global, qualsevol aplicació TCP, inclou part servidora i part cli
 A continuació es planteja un exemple que il·lustra una comunicació TCP.
 
 
-!!! tip "**Exemple 3.5**:"
-    **Implementa un programa al paquet Exemple3\_05\_HolaAdeuTCP que implemente una breu comunicació entre un client TCP (Hola.java)  i un servidor TCP (Adeu.java) que aten peticions al  port 15000\. El client envia el text “Hola” i el servidor li contesta amb el text “Adeu”.**
+??? tip "**Exemple 3.5**:"
+    **Implementa un programa al paquet Exemple3\_05\_HolaAdeuTCP que implemente una breu comunicació entre un client TCP (*Hola.java*)  i un servidor TCP (*Adeu.java*) que aten peticions al  port 15000\. El client envia el text “Hola” i el servidor li contesta amb el text “*Adeu*”.**
     
-Al codi s’observa que s’han emprat fils per implementar la lògica del client i servidor TCP
+    Al codi s’observa que s’han emprat fils per implementar la lògica del client i servidor TCP
 
-***Main.java***
-```java
-package Exemple3_05_HolaAdeuTCPu;
+    ```java title="Main.java"
+    package Exemple3_05_HolaAdeuTCPu;
 
+    import java.io.IOException;
+    import java.net.InetAddress;
 
-import java.io.IOException;
-import java.net.InetAddress;
+    public class Main {
+        static final int serverPort=15000;
+        public static void main(String[] args) {
 
-
-public class Main {
-   static final int serverPort=15000;
-   public static void main(String[] args) {
-
-
-       try {
-           System.out.println("Programa que un client TCP envia la paraula 'Hola' al Servidor"
+           try {
+               System.out.println("Programa que un client TCP envia la paraula 'Hola' al Servidor"
                    + "\n i el Servidor visualitza el text a més de respondre al Client amb 'Adeu'"
                    + "\n visualitzant-ho tot per pantalla");
-           System.out.println("========================================================================");
+               System.out.println("========================================================================");
 
 
-           Thread server = new Thread(new Adeu(serverPort),"servidorADEU");
-           server.start();
-           Thread.sleep(500);
+               Thread server = new Thread(new Adeu(serverPort),"servidorADEU");
+               server.start();
+               Thread.sleep(500);
 
+           Thread client = new Thread(new Hola(InetAddress.getByName("127.0.0.1"), serverPort),"clientHOLA");
+               client.start();
 
-       Thread client = new Thread(new Hola(InetAddress.getByName("127.0.0.1"), serverPort),"clientHOLA");
-           client.start();
-
-
-           server.join();
-           client.join();
-       }catch (InterruptedException | IOException e) {
-           // TODO Auto-generated catch block
-           e.printStackTrace();
-       }
-   }//main
-}//class
-
-```
-
-A la classe *Main*, es creen els dos fils passant-los com a arguments o bé el port on escoltar peticions en el cas del servidor o bé el port més la IP del servidor en el cas del Client
-
-***Adeu.java*** *(Servidor TCP)*  
-```java
-package Exemple3_05_HolaAdeuTCP;
-
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
-
-
-public class Adeu implements Runnable{
-   //Atributes
-   private ServerSocket serverSocket;
-   private Socket socketToClient;
-   private int serverPort;
-   DataInputStream fluxIn;
-   DataOutputStream fluxOut;
-
-
-   //Constructor
-   public Adeu(int portToListen) throws IOException {
-       this.serverPort = portToListen;
-       // ServerSocket
-       this.serverSocket = new ServerSocket(portToListen);
-       socketToClient = null;
-       fluxIn = null;
-       fluxOut = null;
-   }
-
-
-   public void run() {
-       String cadenaEnviar = "Adeu";
-       String data;
-       try {
-
-
-           System.out.println("["+Thread.currentThread().getName()+"]  Esperant peticions al port " + serverPort + "...");
-
-
-           // Socket esperant peticio
-           socketToClient = serverSocket.accept();
-           System.out.println("["+Thread.currentThread().getName()+"]  Atenent al Client al port "+socketToClient.getPort());
-
-
-           InputStream in = socketToClient.getInputStream();// Obtenció del flux de LECTURA
-           fluxIn = new DataInputStream(in);                // Conversio a DataInputStream
-           data = fluxIn.readUTF();                        //  lectura del socol Client
-
-
-           // Mostrant dades rebudes
-           System.out.println("["+Thread.currentThread().getName()+"] Dades rebudes al Servidor: " + data);
-
-
-           OutputStream out = socketToClient.getOutputStream();// Obtenció del flux d'ESCRIPTURA
-           fluxOut = new DataOutputStream(out);                // Conversio a DataOutputStream
-           System.out.println("["+Thread.currentThread().getName()+"] Dades enviades al Client: " + cadenaEnviar);
-           fluxOut.writeUTF(cadenaEnviar);                         // escriptura al socol Client
-
-
-           // Tancament del socol amb el Client
-           if (socketToClient != null && !socketToClient.isClosed()) {
-               //Tancament de flux lectura
-               if (!socketToClient.isInputShutdown()) {
-                   System.out.println("["+Thread.currentThread().getName()+"] Tancant flux lectura...");
-                   socketToClient.shutdownInput();
-               }
-               //Tancament de flux escriptura
-               if (!socketToClient.isOutputShutdown()) {
-                   System.out.println("["+Thread.currentThread().getName()+"] Tancant flux escriptura...");
-                   socketToClient.shutdownOutput();
-               }
-               socketToClient.close();
+               server.join();
+               client.join();
+           }catch (InterruptedException | IOException e) {
+               // TODO Auto-generated catch block
+               e.printStackTrace();
            }
+       }//main
+    }//class
+    ```
 
+    A la classe *Main*, es creen els dos fils passant-los com a arguments o bé el port on escoltar peticions en el cas del servidor o bé el port més la IP del servidor en el cas del Client  
+    ***(Servidor TCP)***  
 
-           // Tancament del socol Servidor
-           if (!serverSocket.isClosed())
-               System.out.println("["+Thread.currentThread().getName()+"] Tancant socol al port "+ serverPort);
-               serverSocket.close();
+    ```java  title="Adeu.java"
+    package Exemple3_05_HolaAdeuTCP;
 
+    import java.io.DataInputStream;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.io.InputStream;
+    import java.io.OutputStream;
+    import java.net.ServerSocket;
+    import java.net.Socket;
 
-           System.out.println("["+Thread.currentThread().getName()+"]  Finalitzat");
-       } catch (IOException e) {
-           // TODO Auto-generated catch block
-           e.printStackTrace();
+    public class Adeu implements Runnable{
+       //Atributes
+       private ServerSocket serverSocket;
+       private Socket socketToClient;
+       private int serverPort;
+       DataInputStream fluxIn;
+       DataOutputStream fluxOut;
+
+       //Constructor
+       public Adeu(int portToListen) throws IOException {
+           this.serverPort = portToListen;
+           // ServerSocket
+           this.serverSocket = new ServerSocket(portToListen);
+           socketToClient = null;
+           fluxIn = null;
+           fluxOut = null;
        }
-   }//run
-}//class
-```
 
-Destacar que en finalitzar la comunicació, a més de tancar el sòcol específic per a la conversa amb el client, caldrà també tancar el sòcol on el servidor escolta peticions abans finalitzar exemple.
+       public void run() {
+           String cadenaEnviar = "Adeu";
+           String data;
+           try {
 
-***Hola.java*** *(Client TCP)*  
-```java
-package Exemple3_05_HolaAdeuTCP;
+               System.out.println("["+Thread.currentThread().getName()+"]  Esperant peticions al port " + serverPort + "...");
 
+               // Socket esperant peticio
+               socketToClient = serverSocket.accept();
+               System.out.println("["+Thread.currentThread().getName()+"]  Atenent al Client al port "+socketToClient.getPort());
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.InetAddress;
-import java.net.Socket;
+               InputStream in = socketToClient.getInputStream();// Obtenció del flux de LECTURA
+               fluxIn = new DataInputStream(in);                // Conversio a DataInputStream
+               data = fluxIn.readUTF();                        //  lectura del socol Client
 
+               // Mostrant dades rebudes
+               System.out.println("["+Thread.currentThread().getName()+"] Dades rebudes al Servidor: " + data);
 
-public class Hola implements Runnable{
-   //Atributes
-   private InetAddress IPServer;
-   private Socket socketToServer;
-   private int portToServer;
-   DataInputStream fluxIn;
-   DataOutputStream fluxOut;
+               OutputStream out = socketToClient.getOutputStream();// Obtenció del flux d'ESCRIPTURA
+               fluxOut = new DataOutputStream(out);                // Conversio a DataOutputStream
+               System.out.println("["+Thread.currentThread().getName()+"] Dades enviades al Client: " + cadenaEnviar);
+               fluxOut.writeUTF(cadenaEnviar);                         // escriptura al socol Client
 
-
-   //Constructor
-   public Hola(InetAddress IPServer, int portToWrite) throws IOException {
-       this.IPServer = IPServer;
-       this.portToServer = portToWrite;
-       this.socketToServer = new Socket(IPServer, portToServer);
-       fluxIn = null;
-       fluxOut = null;
-   }
-
-
-   public void run() {
-       String cadenaEnviar = "Hola";
-
-
-       try {
-           // Obtenció del flux d'ESCRIPTURA
-           OutputStream out = socketToServer.getOutputStream();
-           fluxOut = new DataOutputStream(out);    // Conversio a DataOutputStream
-           System.out.println("["+Thread.currentThread().getName()+"] Dades enviades al Servidor: " + cadenaEnviar);
-           fluxOut.writeUTF(cadenaEnviar);             // escriptura al socol del Servidor
-
-
-
-
-           // Obtenció del flux de LECTURA
-           InputStream in = socketToServer.getInputStream();
-           fluxIn = new DataInputStream(in);       // Conversio a DataInputStream
-           System.out.println("["+Thread.currentThread().getName()+"] Dades rebudes al Client: " + fluxIn.readUTF());
-
-
-           // Tancament del socol amb el Servidor
-           if (socketToServer != null && !socketToServer.isClosed()) {
-               if (!socketToServer.isInputShutdown()) {
-                   System.out.println("["+Thread.currentThread().getName()+"] Tancant flux lectura...");
-                   socketToServer.shutdownInput();
+               // Tancament del socol amb el Client
+               if (socketToClient != null && !socketToClient.isClosed()) {
+                   //Tancament de flux lectura
+                   if (!socketToClient.isInputShutdown()) {
+                       System.out.println("["+Thread.currentThread().getName()+"] Tancant flux lectura...");
+                       socketToClient.shutdownInput();
+                   }
+                   //Tancament de flux escriptura
+                   if (!socketToClient.isOutputShutdown()) {
+                       System.out.println("["+Thread.currentThread().getName()+"] Tancant flux escriptura...");
+                       socketToClient.shutdownOutput();
+                   }
+                   socketToClient.close();
                }
-               if (!socketToServer.isOutputShutdown()) {
-                   System.out.println("["+Thread.currentThread().getName()+"] Tancant flux escriptura...");
-                   socketToServer.shutdownOutput();
-               }
-               System.out.println("["+Thread.currentThread().getName()+"] Tancant socol");
-               socketToServer.close();
 
+               // Tancament del socol Servidor
+               if (!serverSocket.isClosed())
+                   System.out.println("["+Thread.currentThread().getName()+"] Tancant socol al port "+ serverPort);
+                   serverSocket.close();
 
                System.out.println("["+Thread.currentThread().getName()+"]  Finalitzat");
+           } catch (IOException e) {
+               // TODO Auto-generated catch block
+               e.printStackTrace();
            }
-       } catch (IOException e) {
-           // TODO Auto-generated catch block
-           e.printStackTrace();
-       }
-   }//run 
-}//class 
+       }//run
+    }//class
+    ```
 
-```
+    Destacar que en finalitzar la comunicació, a més de tancar el sòcol específic per a la conversa amb el client, caldrà també tancar el sòcol on el servidor escolta peticions abans finalitzar exemple.
 
-!!! note "**Activitat Proposada 3.6**"
+    ***(Client TCP)***
+    ```java  title="Hola.java"
+    package Exemple3_05_HolaAdeuTCP;
+
+    import java.io.DataInputStream;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.io.InputStream;
+    import java.io.OutputStream;
+    import java.net.InetAddress;
+    import java.net.Socket;
+
+    public class Hola implements Runnable{
+        //Atributes
+        private InetAddress IPServer;
+        private Socket socketToServer;
+        private int portToServer;
+        DataInputStream fluxIn;
+        DataOutputStream fluxOut;
+
+
+        //Constructor
+        public Hola(InetAddress IPServer, int portToWrite) throws IOException {
+            this.IPServer = IPServer;
+            this.portToServer = portToWrite;
+            this.socketToServer = new Socket(IPServer, portToServer);
+            fluxIn = null;
+            fluxOut = null;
+        }
+
+        public void run() {
+           String cadenaEnviar = "Hola";
+
+            try {
+               // Obtenció del flux d'ESCRIPTURA
+                OutputStream out = socketToServer.getOutputStream();
+                fluxOut = new DataOutputStream(out);    // Conversio a DataOutputStream
+                System.out.println("["+Thread.currentThread().getName()+"] Dades enviades al Servidor: " + cadenaEnviar);
+                fluxOut.writeUTF(cadenaEnviar);             // escriptura al socol del Servidor
+
+               // Obtenció del flux de LECTURA
+               InputStream in = socketToServer.getInputStream();
+               fluxIn = new DataInputStream(in);       // Conversio a DataInputStream
+                System.out.println("["+Thread.currentThread().getName()+"] Dades rebudes al Client: " + fluxIn.readUTF());
+
+               // Tancament del socol amb el Servidor
+               if (socketToServer != null && !socketToServer.isClosed()) {
+                   if (!socketToServer.isInputShutdown()) {
+                       System.out.println("["+Thread.currentThread().getName()+"] Tancant flux lectura...");
+                       socketToServer.shutdownInput();
+                    }
+                    if (!socketToServer.isOutputShutdown()) {
+                        System.out.println("["+Thread.currentThread().getName()+"] Tancant flux escriptura...");
+                        socketToServer.shutdownOutput();
+                    }
+                    System.out.println("["+Thread.currentThread().getName()+"] Tancant socol");
+                    socketToServer.close();
+
+                    System.out.println("["+Thread.currentThread().getName()+"]  Finalitzat");
+               }
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }//run 
+    }//class 
+    ```
+
+??? note "**Activitat Proposada 3.6**"
     **Realitza un programa al paquet Act3\_06\_Servidor3Clients que realitze un breu diàleg orientat a connexió entre un programa servidor i tres clients que intercanvien cadenes d'informació. Cada vegada que es presenta un client, el servidor el saludarà enviant-li la frase "Hola client N" (on N és el número de client) a mostrar per pantalla el client. Este servidor sols atendrà fins a tres client finalizant la seua execució després i mostrant a cada petició el text "Atenent al client N".**
+
+    ``` mermaid
+    sequenceDiagram
+    autonumber
+    Note right of Servidor: Esperant connexions al port 11000
+    Client1->> Servidor:  Iniciant comunicació amb el servidor al port 11000...
+        Servidor --> Client1: Hola Client1
+    Client2->> Servidor:  Iniciant comunicació amb el servidor al port 11000...
+    Servidor --> Client2: Hola Client2
+    Client3->> Servidor:  Iniciant comunicació amb el servidor al port 11000...
+    Servidor --> Client2: Hola Client3
+    ```
 
     Exemple: 
 

@@ -123,13 +123,21 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Canvia a mode oscur"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Canvia a mode oscur" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
     
   
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Canvia a mode clar"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Canvia a mode clar" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
     
   
 </form>
@@ -623,7 +631,7 @@
           
           
             <div class="md-content" data-md-component="content">
-              <article class="md-content__inner md-typeset">
+              <article class="md-content__inner md-typeset"><a class="md-content__button md-icon" download href="MulticastUDP.pdf" title="PDF"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10.5h1v3h-1v-3m-5 1h1v-1H7v1M20 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2M9.5 10.5A1.5 1.5 0 0 0 8 9H5.5v6H7v-2h1a1.5 1.5 0 0 0 1.5-1.5v-1m5 0A1.5 1.5 0 0 0 13 9h-2.5v6H13a1.5 1.5 0 0 0 1.5-1.5v-3m4-1.5h-3v6H17v-2h1.5v-1.5H17v-1h1.5V9z"></path></svg></a>
                 
                   
 
@@ -680,34 +688,72 @@
 <li>Tancar el sòcol multicast.</li>
 </ol>
 <p>Qualsevol objecte MulticastSocket podrà fer enviaments a tots els dispositius subscrits i rebre tot allò que vaja dirigit a l’adreça associada.</p>
-<p>Esquema resum del funcionament general d’una aplicació Client/Servidor en Multicast:
-<img alt="Imatge multicastprocess.png" src="../../imatges/multicastprocess.png" /></p>
-<div class="admonition tip">
-<p class="admonition-title"><strong>Exemple 3.4</strong></p>
+<p>Esquema resum del funcionament general d’una aplicació Client/Servidor en Multicast:</p>
+<p><img alt="Imatge multicastprocess.png" src="../../imatges/multicastprocess.png" /></p>
+<details class="tip">
+<summary><strong>Exemple 3.4</strong></summary>
 <p><strong>Implementa un programa que genere un fil enviador dell missatge “<em>Hola món en multicast</em>” en multicast al port 10000 en el que hi haja 4 fils rebedors que processen el missatge i els mostren per pantalla.</strong></p>
-</div>
-<p><strong>Main.java</strong>
-<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">Exemple3_04_Multicast</span><span class="p">;</span>
-
+<p><div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Main.java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">Exemple3_04_Multicast</span><span class="p">;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.net.InetAddress</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.net.UnknownHostException</span><span class="p">;</span>
 
-
 <span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Main</span><span class="w"> </span><span class="p">{</span>
-
 
 <span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// TODO Auto-generated method stub</span>
 <span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Programa en que els fils treballen en Multicast&quot;</span>
-<span class="w">                </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;\n on uns envien dades i altres les reben &quot;</span>
-<span class="w">                </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;\n visualitzant-les per pantalla&quot;</span><span class="p">);</span>
-<span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;=======================================================&quot;</span><span class="p">);</span>
-
+<span class="w">            </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;\n on uns envien dades i altres les reben &quot;</span>
+<span class="w">            </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;\n visualitzant-les per pantalla&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;=======================================================&quot;</span><span class="p">);</span>
 
 <span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">portToWork</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10000</span><span class="p">;</span>
-
 
 <span class="w">        </span><span class="c1">//Creació d&#39;una adreça IP de Multicast</span>
 <span class="w">        </span><span class="n">InetAddress</span><span class="w"> </span><span class="n">multicast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
@@ -717,7 +763,6 @@
 <span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
 <span class="w">        </span><span class="p">}</span>
 
-
 <span class="w">        </span><span class="n">Thread</span><span class="w"> </span><span class="n">getterMulticast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
 <span class="w">        </span><span class="c1">//Creació i llançament de 4 fils rebedors</span>
 <span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -725,28 +770,78 @@
 <span class="w">            </span><span class="n">getterMulticast</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w">   </span>
 <span class="w">        </span><span class="p">}</span>
 
-
 <span class="w">        </span><span class="c1">//Creació i llançament del fil enviador</span>
 <span class="w">        </span><span class="n">Thread</span><span class="w"> </span><span class="n">senderMulticast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Thread</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">SendMulticast</span><span class="p">(</span><span class="n">portToWork</span><span class="p">,</span><span class="w"> </span><span class="n">multicast</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;SenderMulticast&quot;</span><span class="p">);</span>
 <span class="w">        </span><span class="n">senderMulticast</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
 
-
 <span class="w">        </span><span class="n">getterMulticast</span><span class="p">.</span><span class="na">join</span><span class="p">();</span>
 <span class="w">        </span><span class="n">senderMulticast</span><span class="p">.</span><span class="na">join</span><span class="p">();</span>
 
-
 <span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Programa finalitzat&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">InterruptedException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// (1)!</span>
 <span class="w">        </span><span class="c1">// TODO Auto-generated catch block</span>
 <span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">   </span><span class="p">}</span><span class="c1">//main</span>
 <span class="p">}</span><span class="c1">//class</span>
-</code></pre></div></p>
+</code></pre></div></td></tr></table></div>
+1.  excepció</p>
 <hr />
-<p><strong>SendMulticast.java</strong>
-<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">Exemple3_04_Multicast</span><span class="p">;</span>
-
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SendMulticast.java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">Exemple3_04_Multicast</span><span class="p">;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.io.IOException</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.net.DatagramPacket</span><span class="p">;</span>
@@ -754,12 +849,10 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.net.InetAddress</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.net.MulticastSocket</span><span class="p">;</span>
 
-
 <span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SendMulticast</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Runnable</span><span class="p">{</span>
 <span class="w">   </span><span class="c1">//Attrib</span>
 <span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">port</span><span class="p">;</span>
 <span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">InetAddress</span><span class="w"> </span><span class="n">multicast</span><span class="p">;</span>
-
 
 <span class="w">   </span><span class="c1">//---CONSTRUCTOR--------</span>
 <span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="nf">SendMulticast</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">port</span><span class="p">,</span><span class="w"> </span><span class="n">InetAddress</span><span class="w"> </span><span class="n">multicast</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -767,62 +860,99 @@
 <span class="w">       </span><span class="k">this</span><span class="p">.</span><span class="na">multicast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">multicast</span><span class="p">;</span>
 <span class="w">   </span><span class="p">}</span>
 
-
-
-
 <span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">       </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">                      </span>
 <span class="w">           </span><span class="c1">//Creació d&#39;un socol multicast</span>
 <span class="w">           </span><span class="n">MulticastSocket</span><span class="w"> </span><span class="n">mSocket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MulticastSocket</span><span class="p">(</span><span class="n">port</span><span class="p">);</span>
 
-
 <span class="w">           </span><span class="c1">//Subscripció a l&#39;adreça Multicast</span>
 <span class="w">           </span><span class="n">mSocket</span><span class="p">.</span><span class="na">joinGroup</span><span class="p">(</span><span class="n">multicast</span><span class="p">);</span>
-
 
 <span class="w">           </span><span class="c1">//Missatge a enviar</span>
 <span class="w">           </span><span class="n">String</span><span class="w"> </span><span class="n">cadenaAenviar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;***Hola món en Multicast****&quot;</span><span class="p">);</span>
 <span class="w">           </span><span class="c1">//Visualitzant el missatge a enviar per DatagramPacket</span>
 <span class="w">           </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;] Text a enviar: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cadenaAenviar</span><span class="p">);</span>
 
-
-
-
 <span class="w">           </span><span class="c1">//Conversio de String a bytes[]</span>
 <span class="w">           </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">missatge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cadenaAenviar</span><span class="p">.</span><span class="na">getBytes</span><span class="p">(</span><span class="s">&quot;UTF-8&quot;</span><span class="p">);</span>
 
-
 <span class="w">           </span><span class="c1">//Creacio d&#39;un DatagramPacket amb el missatge</span>
 <span class="w">           </span><span class="n">DatagramPacket</span><span class="w"> </span><span class="n">datagrama</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DatagramPacket</span><span class="p">(</span><span class="n">missatge</span><span class="p">,</span><span class="w"> </span><span class="n">missatge</span><span class="p">.</span><span class="na">length</span><span class="p">,</span><span class="w"> </span><span class="n">multicast</span><span class="p">,</span><span class="w"> </span><span class="n">port</span><span class="p">);</span>
-
 
 <span class="w">           </span><span class="c1">//Enviament del DatagramPacket</span>
 <span class="w">           </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;] Enviant text...&quot;</span><span class="p">);</span>
 <span class="w">           </span><span class="n">mSocket</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">datagrama</span><span class="p">);</span>
 
-
-
-
 <span class="w">           </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;] Tancant sòcol multicast&quot;</span><span class="p">);</span>
 <span class="w">           </span><span class="n">mSocket</span><span class="p">.</span><span class="na">leaveGroup</span><span class="p">(</span><span class="n">multicast</span><span class="p">);</span>
-
 
 <span class="w">           </span><span class="c1">//Tancament del socket</span>
 <span class="w">           </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">mSocket</span><span class="p">.</span><span class="na">isClosed</span><span class="p">())</span>
 <span class="w">               </span><span class="n">mSocket</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
 
-
-<span class="w">       </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">       </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
 <span class="w">           </span><span class="c1">// TODO Auto-generated catch block</span>
 <span class="w">           </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
 <span class="w">       </span><span class="p">}</span>
 <span class="w">   </span><span class="p">}</span><span class="c1">//run</span>
 <span class="p">}</span><span class="c1">//class</span>
-</code></pre></div></p>
+</code></pre></div></td></tr></table></div>
 <hr />
-<p><strong>GetMulticast.java</strong>
-<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">Exemple3_04_Multicast</span><span class="p">;</span>
-
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">GetMulticast.java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">Exemple3_04_Multicast</span><span class="p">;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.io.IOException</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.net.DatagramPacket</span><span class="p">;</span>
@@ -830,12 +960,10 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.net.InetAddress</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.net.MulticastSocket</span><span class="p">;</span>
 
-
 <span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SendMulticast</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Runnable</span><span class="p">{</span>
 <span class="w">   </span><span class="c1">//Attrib</span>
 <span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">port</span><span class="p">;</span>
 <span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">InetAddress</span><span class="w"> </span><span class="n">multicast</span><span class="p">;</span>
-
 
 <span class="w">   </span><span class="c1">//---CONSTRUCTOR--------</span>
 <span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="nf">SendMulticast</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">port</span><span class="p">,</span><span class="w"> </span><span class="n">InetAddress</span><span class="w"> </span><span class="n">multicast</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -843,50 +971,35 @@
 <span class="w">       </span><span class="k">this</span><span class="p">.</span><span class="na">multicast</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">multicast</span><span class="p">;</span>
 <span class="w">   </span><span class="p">}</span>
 
-
-
-
 <span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">       </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">                      </span>
 <span class="w">           </span><span class="c1">//Creació d&#39;un socol multicast</span>
 <span class="w">           </span><span class="n">MulticastSocket</span><span class="w"> </span><span class="n">mSocket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MulticastSocket</span><span class="p">(</span><span class="n">port</span><span class="p">);</span>
 
-
 <span class="w">           </span><span class="c1">//Subscripció a l&#39;adreça Multicast</span>
 <span class="w">           </span><span class="n">mSocket</span><span class="p">.</span><span class="na">joinGroup</span><span class="p">(</span><span class="n">multicast</span><span class="p">);</span>
-
 
 <span class="w">           </span><span class="c1">//Missatge a enviar</span>
 <span class="w">           </span><span class="n">String</span><span class="w"> </span><span class="n">cadenaAenviar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;***Hola món en Multicast****&quot;</span><span class="p">);</span>
 <span class="w">           </span><span class="c1">//Visualitzant el missatge a enviar per DatagramPacket</span>
 <span class="w">           </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;] Text a enviar: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cadenaAenviar</span><span class="p">);</span>
 
-
-
-
 <span class="w">           </span><span class="c1">//Conversio de String a bytes[]</span>
 <span class="w">           </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">missatge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cadenaAenviar</span><span class="p">.</span><span class="na">getBytes</span><span class="p">(</span><span class="s">&quot;UTF-8&quot;</span><span class="p">);</span>
 
-
 <span class="w">           </span><span class="c1">//Creacio d&#39;un DatagramPacket amb el missatge</span>
 <span class="w">           </span><span class="n">DatagramPacket</span><span class="w"> </span><span class="n">datagrama</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DatagramPacket</span><span class="p">(</span><span class="n">missatge</span><span class="p">,</span><span class="w"> </span><span class="n">missatge</span><span class="p">.</span><span class="na">length</span><span class="p">,</span><span class="w"> </span><span class="n">multicast</span><span class="p">,</span><span class="w"> </span><span class="n">port</span><span class="p">);</span>
-
 
 <span class="w">           </span><span class="c1">//Enviament del DatagramPacket</span>
 <span class="w">           </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;] Enviant text...&quot;</span><span class="p">);</span>
 <span class="w">           </span><span class="n">mSocket</span><span class="p">.</span><span class="na">send</span><span class="p">(</span><span class="n">datagrama</span><span class="p">);</span>
 
-
-
-
 <span class="w">           </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;[&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Thread</span><span class="p">.</span><span class="na">currentThread</span><span class="p">().</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;] Tancant sòcol multicast&quot;</span><span class="p">);</span>
 <span class="w">           </span><span class="n">mSocket</span><span class="p">.</span><span class="na">leaveGroup</span><span class="p">(</span><span class="n">multicast</span><span class="p">);</span>
-
 
 <span class="w">           </span><span class="c1">//Tancament del socket</span>
 <span class="w">           </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">mSocket</span><span class="p">.</span><span class="na">isClosed</span><span class="p">())</span>
 <span class="w">               </span><span class="n">mSocket</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
-
 
 <span class="w">       </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">           </span><span class="c1">// TODO Auto-generated catch block</span>
@@ -894,10 +1007,11 @@
 <span class="w">       </span><span class="p">}</span>
 <span class="w">   </span><span class="p">}</span><span class="c1">//run</span>
 <span class="p">}</span><span class="c1">//class</span>
-</code></pre></div></p>
+</code></pre></div></td></tr></table></div>
 <hr />
-<div class="admonition note">
-<p class="admonition-title"><strong>Activitat Proposada 3.5</strong></p>
+</details>
+<details class="note">
+<summary><strong>Activitat Proposada 3.5</strong></summary>
 <p><strong>Crea el programa amb el nom de paquet Act3_05_BroadcastIso en que genere un fil servidor encarregat de d’enviar per difusió al port 10000 el percentatge d’una imatge de disc dur que se suposa que té (sols enviarà el text del percentatge enviat, p.e. "50% imatge disc dur...", no  la imatge). El fil servidor esperarà 5 segons de cortesia per a que es connecten 3 fils clients, i després enviarà el percentatge a tots els fils subscrits. S’enviaran un total de 10 missatges (un per cada 10% de l’imatge enviada) i els fils clients connectats, caldrà que mostren per pantalla el text rebut.</strong></p>
 <p><em>Exemple:</em></p>
 <p>[Servidor Multicast] Escoltant al port 10000... <br> 
@@ -933,7 +1047,7 @@
 [Servidor Multicast] Servidor ha finalitzat d’enviar Paquets!<br>    [Client Multicast 1] Client DESUNINT-SE del multicast IP /224.0.113.0<br>
 [Client Multicast 2] Client DESUNINT-SE del multicast IP /224.0.113.0<br>
 [Client Multicast 3] Client DESUNINT-SE del multicast IP /224.0.113.0<br>[Servidor Multicast] Servidor tancant sòcol Multicast </p>
-</div>
+</details>
 
 
 
@@ -953,6 +1067,12 @@
           
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
         
       </main>
       
@@ -1026,7 +1146,7 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.sections", "navigation.footer", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>

@@ -38,231 +38,185 @@ El procediment per l’enviament i la recepció en multicast consisteix a:
 Qualsevol objecte MulticastSocket podrà fer enviaments a tots els dispositius subscrits i rebre tot allò que vaja dirigit a l’adreça associada.
 
 Esquema resum del funcionament general d’una aplicació Client/Servidor en Multicast:
+
 ![Imatge multicastprocess.png](../imatges/multicastprocess.png)
 
-!!! tip "**Exemple 3.4**"
+??? tip "**Exemple 3.4**"
     **Implementa un programa que genere un fil enviador dell missatge “*Hola món en multicast*” en multicast al port 10000 en el que hi haja 4 fils rebedors que processen el missatge i els mostren per pantalla.**
 
-**Main.java**
-```java
-package Exemple3_04_Multicast;
 
+    ```java title="Main.java"
+    package Exemple3_04_Multicast;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+    import java.net.InetAddress;
+    import java.net.UnknownHostException;
 
+    public class Main {
 
-public class Main {
-
-
-   public static void main(String[] args) {
-    // TODO Auto-generated method stub
-    try {
-        System.out.println("Programa en que els fils treballen en Multicast"
+       public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        try {
+            System.out.println("Programa en que els fils treballen en Multicast"
                 + "\n on uns envien dades i altres les reben "
                 + "\n visualitzant-les per pantalla");
             System.out.println("=======================================================");
 
+            int portToWork = 10000;
 
-        int portToWork = 10000;
+            //Creació d'una adreça IP de Multicast
+            InetAddress multicast = null;
+            try {
+                multicast = InetAddress.getByName("230.0.0.1");
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
 
+            Thread getterMulticast = null;
+            //Creació i llançament de 4 fils rebedors
+            for (int i=0; i<4; i++) {
+                getterMulticast = new Thread(new GetMulticast(portToWork, multicast), "GetterMulticast"+(i+1));
+                getterMulticast.start();   
+            }
 
-        //Creació d'una adreça IP de Multicast
-        InetAddress multicast = null;
-        try {
-            multicast = InetAddress.getByName("230.0.0.1");
-        } catch (UnknownHostException e) {
+            //Creació i llançament del fil enviador
+            Thread senderMulticast = new Thread(new SendMulticast(portToWork, multicast), "SenderMulticast");
+            senderMulticast.start();
+
+            getterMulticast.join();
+            senderMulticast.join();
+
+            System.out.println("Programa finalitzat");
+        } catch (InterruptedException e) { // (1)!
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+       }//main
+    }//class
+    ```
+    1.  excepció
+    ---
 
+    ```java title="SendMulticast.java"
+    package Exemple3_04_Multicast;
 
-        Thread getterMulticast = null;
-        //Creació i llançament de 4 fils rebedors
-        for (int i=0; i<4; i++) {
-            getterMulticast = new Thread(new GetMulticast(portToWork, multicast), "GetterMulticast"+(i+1));
-            getterMulticast.start();   
-        }
+    import java.io.IOException;
+    import java.net.DatagramPacket;
+    import java.net.DatagramSocket;
+    import java.net.InetAddress;
+    import java.net.MulticastSocket;
 
+    public class SendMulticast implements Runnable{
+       //Attrib
+       private int port;
+       private InetAddress multicast;
 
-        //Creació i llançament del fil enviador
-        Thread senderMulticast = new Thread(new SendMulticast(portToWork, multicast), "SenderMulticast");
-        senderMulticast.start();
-
-
-        getterMulticast.join();
-        senderMulticast.join();
-
-
-        System.out.println("Programa finalitzat");
-    } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    }
-   }//main
-}//class
-
-
-```
----
-
-**SendMulticast.java**
-```java
-package Exemple3_04_Multicast;
-
-
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
-
-
-public class SendMulticast implements Runnable{
-   //Attrib
-   private int port;
-   private InetAddress multicast;
-
-
-   //---CONSTRUCTOR--------
-   public SendMulticast(int port, InetAddress multicast) {
-       this.port = port;
-       this.multicast = multicast;
-   }
-
-
-
-
-   public void run() {
-       try {                      
-           //Creació d'un socol multicast
-           MulticastSocket mSocket = new MulticastSocket(port);
-
-
-           //Subscripció a l'adreça Multicast
-           mSocket.joinGroup(multicast);
-
-
-           //Missatge a enviar
-           String cadenaAenviar = new String ("***Hola món en Multicast****");
-           //Visualitzant el missatge a enviar per DatagramPacket
-           System.out.println("[" + Thread.currentThread().getName() + "] Text a enviar: " + cadenaAenviar);
-
-
-
-
-           //Conversio de String a bytes[]
-           byte[] missatge = cadenaAenviar.getBytes("UTF-8");
-
-
-           //Creacio d'un DatagramPacket amb el missatge
-           DatagramPacket datagrama = new DatagramPacket(missatge, missatge.length, multicast, port);
-
-
-           //Enviament del DatagramPacket
-           System.out.println("[" + Thread.currentThread().getName() + "] Enviant text...");
-           mSocket.send(datagrama);
-
-
-
-
-           System.out.println("[" + Thread.currentThread().getName() + "] Tancant sòcol multicast");
-           mSocket.leaveGroup(multicast);
-
-
-           //Tancament del socket
-           if(!mSocket.isClosed())
-               mSocket.close();
-
-
-       } catch (IOException e) {
-           // TODO Auto-generated catch block
-           e.printStackTrace();
+       //---CONSTRUCTOR--------
+       public SendMulticast(int port, InetAddress multicast) {
+           this.port = port;
+           this.multicast = multicast;
        }
-   }//run
-}//class
-```
----
 
-**GetMulticast.java**
-```java
-package Exemple3_04_Multicast;
+       public void run() {
+           try {                      
+               //Creació d'un socol multicast
+               MulticastSocket mSocket = new MulticastSocket(port);
 
+               //Subscripció a l'adreça Multicast
+               mSocket.joinGroup(multicast);
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
+               //Missatge a enviar
+               String cadenaAenviar = new String ("***Hola món en Multicast****");
+               //Visualitzant el missatge a enviar per DatagramPacket
+               System.out.println("[" + Thread.currentThread().getName() + "] Text a enviar: " + cadenaAenviar);
 
+               //Conversio de String a bytes[]
+               byte[] missatge = cadenaAenviar.getBytes("UTF-8");
 
-public class SendMulticast implements Runnable{
-   //Attrib
-   private int port;
-   private InetAddress multicast;
+               //Creacio d'un DatagramPacket amb el missatge
+               DatagramPacket datagrama = new DatagramPacket(missatge, missatge.length, multicast, port);
 
+               //Enviament del DatagramPacket
+               System.out.println("[" + Thread.currentThread().getName() + "] Enviant text...");
+               mSocket.send(datagrama);
 
-   //---CONSTRUCTOR--------
-   public SendMulticast(int port, InetAddress multicast) {
-       this.port = port;
-       this.multicast = multicast;
-   }
+               System.out.println("[" + Thread.currentThread().getName() + "] Tancant sòcol multicast");
+               mSocket.leaveGroup(multicast);
 
+               //Tancament del socket
+               if(!mSocket.isClosed())
+                   mSocket.close();
 
+           } catch (IOException e) { 
+               // TODO Auto-generated catch block
+               e.printStackTrace();
+           }
+       }//run
+    }//class
+    ```
 
+    ---
 
-   public void run() {
-       try {                      
-           //Creació d'un socol multicast
-           MulticastSocket mSocket = new MulticastSocket(port);
+    ```java  title="GetMulticast.java"
+    package Exemple3_04_Multicast;
 
+    import java.io.IOException;
+    import java.net.DatagramPacket;
+    import java.net.DatagramSocket;
+    import java.net.InetAddress;
+    import java.net.MulticastSocket;
 
-           //Subscripció a l'adreça Multicast
-           mSocket.joinGroup(multicast);
+    public class SendMulticast implements Runnable{
+       //Attrib
+       private int port;
+       private InetAddress multicast;
 
-
-           //Missatge a enviar
-           String cadenaAenviar = new String ("***Hola món en Multicast****");
-           //Visualitzant el missatge a enviar per DatagramPacket
-           System.out.println("[" + Thread.currentThread().getName() + "] Text a enviar: " + cadenaAenviar);
-
-
-
-
-           //Conversio de String a bytes[]
-           byte[] missatge = cadenaAenviar.getBytes("UTF-8");
-
-
-           //Creacio d'un DatagramPacket amb el missatge
-           DatagramPacket datagrama = new DatagramPacket(missatge, missatge.length, multicast, port);
-
-
-           //Enviament del DatagramPacket
-           System.out.println("[" + Thread.currentThread().getName() + "] Enviant text...");
-           mSocket.send(datagrama);
-
-
-
-
-           System.out.println("[" + Thread.currentThread().getName() + "] Tancant sòcol multicast");
-           mSocket.leaveGroup(multicast);
-
-
-           //Tancament del socket
-           if(!mSocket.isClosed())
-               mSocket.close();
-
-
-       } catch (IOException e) {
-           // TODO Auto-generated catch block
-           e.printStackTrace();
+       //---CONSTRUCTOR--------
+       public SendMulticast(int port, InetAddress multicast) {
+           this.port = port;
+           this.multicast = multicast;
        }
-   }//run
-}//class
 
-```
----
+       public void run() {
+           try {                      
+               //Creació d'un socol multicast
+               MulticastSocket mSocket = new MulticastSocket(port);
 
-!!! note "**Activitat Proposada 3.5**"
+               //Subscripció a l'adreça Multicast
+               mSocket.joinGroup(multicast);
+
+               //Missatge a enviar
+               String cadenaAenviar = new String ("***Hola món en Multicast****");
+               //Visualitzant el missatge a enviar per DatagramPacket
+               System.out.println("[" + Thread.currentThread().getName() + "] Text a enviar: " + cadenaAenviar);
+
+               //Conversio de String a bytes[]
+               byte[] missatge = cadenaAenviar.getBytes("UTF-8");
+
+               //Creacio d'un DatagramPacket amb el missatge
+               DatagramPacket datagrama = new DatagramPacket(missatge, missatge.length, multicast, port);
+
+               //Enviament del DatagramPacket
+               System.out.println("[" + Thread.currentThread().getName() + "] Enviant text...");
+               mSocket.send(datagrama);
+
+               System.out.println("[" + Thread.currentThread().getName() + "] Tancant sòcol multicast");
+               mSocket.leaveGroup(multicast);
+
+               //Tancament del socket
+               if(!mSocket.isClosed())
+                   mSocket.close();
+
+           } catch (IOException e) {
+               // TODO Auto-generated catch block
+               e.printStackTrace();
+           }
+       }//run
+    }//class
+    ```
+
+    ---
+
+??? note "**Activitat Proposada 3.5**"
     **Crea el programa amb el nom de paquet Act3\_05\_BroadcastIso en que genere un fil servidor encarregat de d’enviar per difusió al port 10000 el percentatge d’una imatge de disc dur que se suposa que té (sols enviarà el text del percentatge enviat, p.e. "50% imatge disc dur...", no  la imatge). El fil servidor esperarà 5 segons de cortesia per a que es connecten 3 fils clients, i després enviarà el percentatge a tots els fils subscrits. S’enviaran un total de 10 missatges (un per cada 10% de l’imatge enviada) i els fils clients connectats, caldrà que mostren per pantalla el text rebut.**
     
     *Exemple:*
