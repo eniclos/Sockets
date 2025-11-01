@@ -595,6 +595,19 @@
 <strong>- El fil servidor Multicast, esperarà 10 segons abans de procedir a l’enviament de les dades. El que enviarà serà una imatge del disc dur que la visualitzarem en percentatges de disc dur enviat i que ho mostrarem per pantalla. En finalitzar l’enviament es mostrarà per pantalla eixe fet i procedirà al tancament dels sockets,...</strong></p>
 <p><strong>- Els fils clients Multicast (almenys 3 fils) el que faran serà subscriure’s a la difusió multicast mostrant totes les dades rebudes i informant de la finalització del mateix en arribar al 100%. En acabar enviament, es mostrarà per pantalla la finalització de la recepció de dades, la cancel·lació de la subscripció i tancament dels ports.</strong> </p>
 <p><strong>Simula 3 clients que es connecten en els primers 10 segons previs a enviament del servidor i el tercer client, es connectarà al servidor passats ixos 10 segons inicials enviant les dades per el port que consideres.</strong></p>
+<p><code>mermaid
+sequenceDiagram
+autonumber
+Note right of ServidorMulticast: Esperant 10 segons
+Client1-&gt;&gt; ServidorMulticast:  Subscrivint-se a IP:224.15.81.2 al port 5000
+ServidorMulticast --&gt; Client1: Enviament: 10% imatge disc dur...
+Client2-&gt;&gt; ServidorMulticast:  Subscrivint-se a IP:224.15.81.2 al port 5000
+ServidorMulticast --&gt; Client1: Enviament: 20% imatge disc dur...
+ServidorMulticast --&gt; Client2: Enviament: 20% imatge disc dur...
+Client3-&gt;&gt; ServidorMulticast:  Subscrivint-se a IP:224.15.81.2 al port 5000
+ServidorMulticast --&gt; Client1: Enviament: 20% imatge disc dur...
+ServidorMulticast --&gt; Client2: Enviament: 20% imatge disc dur...
+ServidorMulticast --&gt; Client3: Enviament: 20% imatge disc dur...</code></p>
 <p>Exemple execució:  </p>
 <table>
 <thead>
@@ -606,7 +619,7 @@
 </thead>
 <tbody>
 <tr>
-<td>SERVIDOR MULTICAST esperant 10seg</td>
+<td>SERVIDOR MULTICAST esperant 10 segons</td>
 <td></td>
 <td></td>
 </tr>
