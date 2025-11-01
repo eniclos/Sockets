@@ -356,11 +356,11 @@ A continuació es planteja un exemple que il·lustra una comunicació TCP.
     autonumber
     Note right of Servidor: Esperant connexions al port 11000
     Client1->> Servidor:  Iniciant comunicació amb el servidor al port 11000...
-        Servidor --> Client1: Hola Client1
+        Servidor -->cc> Client1: Hola Client1
     Client2->> Servidor:  Iniciant comunicació amb el servidor al port 11000...
-    Servidor --> Client2: Hola Client2
+    Servidor -->> Client2: Hola Client2
     Client3->> Servidor:  Iniciant comunicació amb el servidor al port 11000...
-    Servidor --> Client2: Hola Client3
+    Servidor -->> Client2: Hola Client3
     ```
 
     Exemple: 
