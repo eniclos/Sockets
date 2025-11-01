@@ -23,11 +23,26 @@ Qualsevol dubte, podeu consultar-me a les tutories col·lectives, a l’individu
     
     **Simula 3 clients que es connecten en els primers 10 segons previs a enviament del servidor i el tercer client, es connectarà al servidor passats ixos 10 segons inicials enviant les dades per el port que consideres.**
 
+       ``` mermaid
+    sequenceDiagram
+    autonumber
+    Note right of ServidorMulticast: Esperant 10 segons
+    Client1->> ServidorMulticast:  Subscrivint-se a IP:224.15.81.2 al port 5000
+    ServidorMulticast --> Client1: Enviament: 10% imatge disc dur...
+    Client2->> ServidorMulticast:  Subscrivint-se a IP:224.15.81.2 al port 5000
+    ServidorMulticast --> Client1: Enviament: 20% imatge disc dur...
+    ServidorMulticast --> Client2: Enviament: 20% imatge disc dur...
+    Client3->> ServidorMulticast:  Subscrivint-se a IP:224.15.81.2 al port 5000
+    ServidorMulticast --> Client1: Enviament: 20% imatge disc dur...
+    ServidorMulticast --> Client2: Enviament: 20% imatge disc dur...
+    ServidorMulticast --> Client3: Enviament: 20% imatge disc dur...
+    ```
+
     Exemple execució:  
 
     | **SERVIDOR** | **CLIENT 1** | **CLIENT 2** |
     | ---- | ---- | ---- |
-    | SERVIDOR MULTICAST esperant 10seg| | |
+    | SERVIDOR MULTICAST esperant 10 segons| | |
     | | CLIENT1. Subscrivint-se a IP:224.15.81.2 al port 5000| |
     | Enviament: 10% imatge disc dur... |  | CLIENT2. Subscrivint-se a IP:224.15.81.2 al port 5000 |
     |Enviament: 20% imatge disc dur... | Dades rebudes: 10% imatge disc dur...| |
