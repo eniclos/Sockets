@@ -13,7 +13,7 @@ Per últim, i de caràcter general, **els programes cal executar-los com a fils 
 Qualsevol dubte, podeu consultar-me a les tutories col·lectives, a l’individual o al fòrum del tema a la plataforma Aules.
 
 
-!!! danger "**Tasca 3.4**"
+??? danger "**Tasca 3.4**"
     **Realitza un programa a Java (nom del paquet ***Task3\_04\_ClonezillaServer***) que simule el comportament del ClonezillaServer amb Multicast usant fils d’execució on:** 
 
     **El funcionament de comunicació serà:**
@@ -89,7 +89,7 @@ Qualsevol dubte, podeu consultar-me a les tutories col·lectives, a l’individu
     | |Cancel·lant subscripció | Cancel·lant subscripció  | 
     
 
-!!! danger "**Tasca 3.5**"
+??? danger "**Tasca 3.5**"
     **Implementa la versió Client/Servidor on el servidor requerirà la validació d’usuari i contrasenya per a poder accedir (nom del paquet ***Task3\_05\_ValidacioTCP***).**
     
     **El funcionament del programa serà:**  
